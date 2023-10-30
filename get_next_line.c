@@ -12,27 +12,64 @@
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+size_t	line_len(char *str)
 {
-	static char buffer[BUFFER_SIZE];
-	static char *ptr = 0;
-	char *line;
-	ssize_t	bytes;
-	ssize_t	len;
+	size_t	i;
 
-	bytes = read(fd, buffer, BUFFER_SIZE);
-	if (bytes == -1)
-		return (0);
-	buffer[bytes] = '\0';
-	len = ft_len_strchr(buffer, '\n') + 1;
-	line = (char *)malloc((len) * sizeof(char));
-	if (!line)
-		return (0);
-	ft_strlcpy(line, buffer, len);
-	line[len] = '\0';
-	return (line);
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	return (i);
 }
 
+char	*ft_read_to_left_str(int fd, char *left_str)
+{
+	char	*buff;
+	int		rd_bytes;
+
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
+	rd_bytes = 1;
+	while (!ft_strchr(left_str, '\n') && rd_bytes != 0)
+	{
+		rd_bytes = read(fd, buff, BUFFER_SIZE);
+		if (rd_bytes == -1)
+		{
+			free(buff);
+			return (NULL);
+		}
+		buff[rd_bytes] = '\0';
+		left_str = ft_strjoin(left_str, buff);
+	}
+	free(buff);
+	return (left_str);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	buffer[BUFFER_SIZE];
+	static char	*ptr = buffer;
+	t_struct	var;
+
+	if (*ptr == '\0')
+	{
+		var.bytes = read(fd, buffer, BUFFER_SIZE);
+		if (var.bytes == -1 || var.bytes == 0)
+			return (0);
+		else if (var.bytes > 0)
+		{
+			buffer[var.bytes] = '\0';
+			ptr = buffer;
+		}
+	}
+	var.line = ft_strndup(ptr, line_len(ptr));
+	ptr += line_len(ptr);
+	return (var.line);
+}
+/*
 int	main(void)
 {
 	int		fd;
@@ -43,10 +80,12 @@ int	main(void)
 		return (1);
 	line = get_next_line(fd);
 	if (line)
-	{
 		printf("%s", line);
-		free(line);
-	}
+	line = get_next_line(fd);
+	if (line)
+		printf("%s", line);
+	free(line);
 	close(fd);
 	return (0);
 }
+ */
