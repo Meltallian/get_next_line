@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug with LLDB",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/a.out",
+        // "args": [], // Command-line arguments if needed
+        // "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "lldb",
+        "preLaunchTask": "", // Name of the build task (if any) to run before debugging
+        "logging": { "trace": true, "traceResponse": true, "engineLogging": true },
+      }
+    ]
+  }

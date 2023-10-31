@@ -6,7 +6,7 @@
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:08:46 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/10/27 17:36:44 by jbidaux          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:58:37 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ typedef struct s_struct {
 
 size_t	ft_strlen(const char *c);
 char	*ft_strchr(const char *src, int c);
-int		ft_len_strchr(const char *src, int c);
-size_t	ft_strlcpy(char *dest, const char *src, size_t n);
-char	*ft_strndup(const char *src, size_t len);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*get_next_line(int fd);
-char	*ft_strjoin(const char *s, const char *s2);
+char	*ft_strjoin(char *s, char *s2);
 
 #endif // GET_NEXT_LINE_H
