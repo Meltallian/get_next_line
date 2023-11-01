@@ -6,7 +6,7 @@
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:10:31 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/10/31 18:15:04 by jbidaux          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:54:55 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,22 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	}
 	sub[i] = '\0';
 	return (sub);
+}
+
+char	*ft_strdup(const char *src)
+{
+	char	*dup;
+	size_t	i;
+
+	i = 0;
+	dup = (char *)malloc((ft_strlen(src)+1) * sizeof(char));
+	if (!dup)
+		return (NULL);
+	while (src[i])
+	{
+		dup[i] = src[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
 }

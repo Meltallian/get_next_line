@@ -6,7 +6,7 @@
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 17:08:46 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/10/31 16:58:37 by jbidaux          ###   ########.fr       */
+/*   Updated: 2023/11/01 15:55:04 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,11 @@
 # include <fcntl.h>
 # include <string.h>
 
-typedef struct s_struct {
-	char	*line;
-	ssize_t	bytes;
-	size_t	i;
-	char 	*temp;
-	char	*new_line;
-}	t_struct;
-
 size_t	ft_strlen(const char *c);
 char	*ft_strchr(const char *src, int c);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*get_next_line(int fd);
 char	*ft_strjoin(char *s, char *s2);
+char	*ft_strdup(const char *src);
 
 #endif // GET_NEXT_LINE_H
