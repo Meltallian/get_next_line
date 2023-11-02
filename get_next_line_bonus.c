@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:33:59 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/02 17:02:55 by jbidaux          ###   ########.fr       */
+/*   Updated: 2023/11/02 17:53:05 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*rem_read(int fd, char *left, char *buffer)
 {
@@ -63,27 +63,27 @@ char	*cut(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*left;
+	static char	*left[MAX_FD];
 	char		*line;
 	char		*buffer;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free (left);
+		free (left[fd]);
 		free (buffer);
-		left = NULL;
+		left[fd] = NULL;
 		buffer = NULL;
 		return (0);
 	}
 	if (!buffer)
 		return (0);
-	line = rem_read(fd, left, buffer);
+	line = rem_read(fd, left[fd], buffer);
 	free (buffer);
 	buffer = 0;
 	if (!line)
 		return (0);
-	left = cut(line);
+	left[fd] = cut(line);
 	return (line);
 }
 
