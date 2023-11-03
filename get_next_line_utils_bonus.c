@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:10:31 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/02 17:42:11 by jbidaux          ###   ########.fr       */
+/*   Created: 2023/11/03 09:53:51 by jbidaux           #+#    #+#             */
+/*   Updated: 2023/11/03 11:15:56 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *c)
 {
@@ -32,13 +32,6 @@ char	*ft_strjoin(char *s, char *s2)
 	size_t	j;
 	char	*res;
 
-	if (!s)
-	{
-		s = (char *)malloc(1 * sizeof(char));
-		s[0] = '\0';
-	}
-	if (!s || !s2)
-		return (0);
 	res = (char *)malloc((ft_strlen(s) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!res)
 		return (0);
@@ -76,8 +69,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	size_t	i;
 	char	*sub;
 
-	if (!s)
-		return (0);
 	if (start >= ft_strlen(s))
 	{
 		sub = (char *)malloc(1 * sizeof(char));
@@ -85,8 +76,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 			*sub = '\0';
 		return (sub);
 	}
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
 	sub = (char *)malloc((len + 1) * sizeof(char));
 	i = 0;
 	if (!sub)

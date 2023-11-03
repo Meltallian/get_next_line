@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:08:46 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/02 17:48:43 by jbidaux          ###   ########.fr       */
+/*   Created: 2023/11/03 11:08:36 by jbidaux           #+#    #+#             */
+/*   Updated: 2023/11/03 13:49:46 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-# define MAX_FD 1048576
+//# define MAX_FILES OPEN_MAX
 
 # include <stddef.h>
 # include <stdlib.h>
@@ -25,6 +25,7 @@
 # include <stdarg.h>
 # include <fcntl.h>
 # include <string.h>
+# include <limits.h>
 
 size_t	ft_strlen(const char *c);
 char	*ft_strchr(const char *src, int c);
@@ -33,4 +34,4 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char *s, char *s2);
 char	*ft_strdup(const char *src);
 
-#endif // GET_NEXT_LINE_BONUS_H
+#endif

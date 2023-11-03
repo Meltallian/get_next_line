@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 14:33:59 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/02 17:02:55 by jbidaux          ###   ########.fr       */
+/*   Created: 2023/11/03 09:56:17 by jbidaux           #+#    #+#             */
+/*   Updated: 2023/11/03 11:16:23 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*rem_read(int fd, char *left, char *buffer)
+char	*next_read(int fd, char	*left, char *buffer)
 {
 	char	*tmp;
 	ssize_t	bytes;
@@ -26,7 +26,7 @@ char	*rem_read(int fd, char *left, char *buffer)
 			free (left);
 			return (0);
 		}
-		else if (bytes == 0)
+		if (bytes == 0)
 			break ;
 		buffer[bytes] = '\0';
 		if (!left)
@@ -34,70 +34,70 @@ char	*rem_read(int fd, char *left, char *buffer)
 		tmp = left;
 		left = ft_strjoin(tmp, buffer);
 		free (tmp);
-		tmp = NULL;
+		tmp = 0;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	return (left);
 }
 
-char	*cut(char *str)
+char	*cut_line(char	*left)
 {
-	char	*cut_str;
-	ssize_t	i;
+	char	*cut_line;
+	size_t	i;
 
 	i = 0;
-	while (str[i] != '\n' && str[i])
+	while (left[i] != '\n' && left[i])
 		i++;
-	if (str[i] == '\0' || str[1] == 0)
-		return (NULL);
-	cut_str = ft_substr(str, i + 1, ft_strlen(str) - i);
-	if (!*cut_str)
+	if (left[i] == '\0' || left[1] == '\0')
+		return (0);
+	cut_line = ft_substr(left, i + 1, ft_strlen(left) - i);
+	if (!*cut_line)
 	{
-		free (cut_str);
-		cut_str = 0;
+		free (cut_line);
+		cut_line = 0;
 	}
-	str[i + 1] = '\0';
-	return (cut_str);
+	left[i + 1] = '\0';
+	return (cut_line);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*left;
-	char		*line;
 	char		*buffer;
+	char		*line;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
 		free (left);
 		free (buffer);
-		left = NULL;
-		buffer = NULL;
+		left = 0;
+		buffer = 0;
 		return (0);
 	}
 	if (!buffer)
 		return (0);
-	line = rem_read(fd, left, buffer);
+	line = next_read(fd, left, buffer);
 	free (buffer);
 	buffer = 0;
 	if (!line)
 		return (0);
-	left = cut(line);
+	left = cut_line(line);
 	return (line);
 }
-
-/* int	main(void)
+/*
+int	main(void)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("texte.txt", O_RDONLY);
+	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
 		return (1);
-	while ((line = get_next_line(fd)))
+ 	while ((line = get_next_line(fd)))
 		printf("%s", line);
-	get_next_line(fd);
+	line = get_next_line(fd);
 	printf("%s", line);
 //	free(line);
 	close(fd);

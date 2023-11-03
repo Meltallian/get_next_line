@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 17:08:46 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/01 15:55:04 by jbidaux          ###   ########.fr       */
+/*   Created: 2023/11/03 11:07:42 by jbidaux           #+#    #+#             */
+/*   Updated: 2023/11/03 11:08:46 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,4 @@ char	*get_next_line(int fd);
 char	*ft_strjoin(char *s, char *s2);
 char	*ft_strdup(const char *src);
 
-#endif // GET_NEXT_LINE_H
+#endif

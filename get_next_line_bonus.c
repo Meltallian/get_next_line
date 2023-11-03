@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbidaux <jeremie.bidaux@gmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 14:33:59 by jbidaux           #+#    #+#             */
-/*   Updated: 2023/11/02 17:53:05 by jbidaux          ###   ########.fr       */
+/*   Created: 2023/11/03 11:05:08 by jbidaux           #+#    #+#             */
+/*   Updated: 2023/11/03 14:42:44 by jbidaux          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*cut(char *str)
 	i = 0;
 	while (str[i] != '\n' && str[i])
 		i++;
-	if (str[i] == '\0' || str[1] == 0)
+	if (str[i] == '\0' || str[0] == 0)
 		return (NULL);
 	cut_str = ft_substr(str, i + 1, ft_strlen(str) - i);
 	if (!*cut_str)
@@ -63,21 +63,24 @@ char	*cut(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*left[MAX_FD];
+	static char	*left[OPEN_MAX];
 	char		*line;
 	char		*buffer;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (!buffer)
+		return (0);
+	if (BUFFER_SIZE <= 0 || fd < 0 || read(fd, 0, 0) < 0)
 	{
-		free (left[fd]);
 		free (buffer);
-		left[fd] = NULL;
+		if (fd > 0)
+		{
+			free(left[fd]);
+			left[fd] = NULL;
+		}
 		buffer = NULL;
 		return (0);
 	}
-	if (!buffer)
-		return (0);
 	line = rem_read(fd, left[fd], buffer);
 	free (buffer);
 	buffer = 0;
@@ -86,21 +89,3 @@ char	*get_next_line(int fd)
 	left[fd] = cut(line);
 	return (line);
 }
-
-/* int	main(void)
-{
-	int		fd;
-	char	*line;
-
-	fd = open("texte.txt", O_RDONLY);
-	if (fd == -1)
-		return (1);
-	while ((line = get_next_line(fd)))
-		printf("%s", line);
-	get_next_line(fd);
-	printf("%s", line);
-//	free(line);
-	close(fd);
-	return (0);
-}
- */
